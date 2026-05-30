@@ -1,3 +1,30 @@
+Як зібрати проект
+
+1. Склонуйте репозиторій
+```bash git clone git@github.com:arlien3560/redko_nosql_1.git```
+
+2. Перейдіть в директорію
+```bash cd redko_nosql_1```
+
+3. Скопіюйте файл налаштувань
+```bash cp .env.example .env```
+Підставте свій ключ.
+
+4. Виконайте наштування проекту.
+```bash python3 -m venv venv```
+
+```bash source venv/bin/activate```
+
+```bash pip install -r requirements.txt```
+
+```bash python3 scripts/01_load_data.py```
+
+5. Приклад запуску команди mongo
+
+```bash mongosh "mongodb+srv://USER:PASSWORD@cluster0.l8m9ene.mongodb.net/?appName=Cluster0" --file queries/part4_indexes.js```
+
+
+
 Відповіді на питання.
 
 Step 1.2. Завантаження данних
