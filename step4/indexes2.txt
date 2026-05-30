@@ -1,0 +1,250 @@
+Пояснення виконання запиту до оптимізації: {
+  explainVersion: '1',
+  queryPlanner: {
+    namespace: 'spotify.tracks',
+    parsedQuery: {
+      '$and': [
+        { explicit: { '$eq': false } },
+        { 'audio_features.speechiness': { '$lte': 0.3 } },
+        { 'audio_features.instrumentalness': { '$gte': 0.5 } }
+      ]
+    },
+    indexFilterSet: false,
+    queryHash: '039B387E',
+    planCacheShapeHash: '039B387E',
+    planCacheKey: '65A816BE',
+    optimizationTimeMillis: 0,
+    maxIndexedOrSolutionsReached: false,
+    maxIndexedAndSolutionsReached: false,
+    maxScansToExplodeReached: false,
+    prunedSimilarIndexes: false,
+    winningPlan: {
+      isCached: false,
+      stage: 'COLLSCAN',
+      filter: {
+        '$and': [
+          { explicit: { '$eq': false } },
+          { 'audio_features.speechiness': { '$lte': 0.3 } },
+          { 'audio_features.instrumentalness': { '$gte': 0.5 } }
+        ]
+      },
+      direction: 'forward'
+    },
+    rejectedPlans: []
+  },
+  executionStats: {
+    executionSuccess: true,
+    nReturned: 18199,
+    executionTimeMillis: 173,
+    totalKeysExamined: 0,
+    totalDocsExamined: 113999,
+    executionStages: {
+      isCached: false,
+      stage: 'COLLSCAN',
+      filter: {
+        '$and': [
+          { explicit: { '$eq': false } },
+          { 'audio_features.speechiness': { '$lte': 0.3 } },
+          { 'audio_features.instrumentalness': { '$gte': 0.5 } }
+        ]
+      },
+      nReturned: 18199,
+      executionTimeMillisEstimate: 167,
+      works: 114000,
+      advanced: 18199,
+      needTime: 95800,
+      needYield: 0,
+      saveState: 12,
+      restoreState: 12,
+      isEOF: 1,
+      direction: 'forward',
+      docsExamined: 113999
+    }
+  },
+  queryShapeHash: 'FE762D4F2B5D72A33111DCB89F7CB4B39B2AE21E94811AF736AAD502968408F5',
+  command: {
+    find: 'tracks',
+    filter: {
+      'audio_features.instrumentalness': { '$gte': 0.5 },
+      'audio_features.speechiness': { '$lte': 0.3 },
+      explicit: false
+    },
+    '$db': 'spotify'
+  },
+  serverInfo: {
+    host: 'ac-tisgreh-shard-00-01.l8m9ene.mongodb.net',
+    port: 27017,
+    version: '8.0.23',
+    gitVersion: 'ccf0d81588377542f00eeecf1b1ffbc095b1eeff'
+  },
+  serverParameters: {
+    internalQueryFacetBufferSizeBytes: 104857600,
+    internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+    internalLookupStageIntermediateDocumentMaxSizeBytes: 16793600,
+    internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+    internalQueryMaxBlockingSortMemoryUsageBytes: 33554432,
+    internalQueryProhibitBlockingMergeOnMongoS: 0,
+    internalQueryMaxAddToSetBytes: 104857600,
+    internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600,
+    internalQueryFrameworkControl: 'trySbeRestricted',
+    internalQueryPlannerIgnoreIndexWithCollationForRegex: 1
+  },
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1780174996, i: 31 }),
+    signature: {
+      hash: Binary.createFromBase64('xQY9cBJd3VzMZhyD8vE1XWRmRQU=', 0),
+      keyId: Long('7600820902384631838')
+    }
+  },
+  operationTime: Timestamp({ t: 1780174996, i: 31 })
+}
+Пояснення виконання запиту після створення індексу: {
+  explainVersion: '1',
+  queryPlanner: {
+    namespace: 'spotify.tracks',
+    parsedQuery: {
+      '$and': [
+        { explicit: { '$eq': false } },
+        { 'audio_features.speechiness': { '$lte': 0.3 } },
+        { 'audio_features.instrumentalness': { '$gte': 0.5 } }
+      ]
+    },
+    indexFilterSet: false,
+    queryHash: '039B387E',
+    planCacheShapeHash: '039B387E',
+    planCacheKey: 'BB66561F',
+    optimizationTimeMillis: 0,
+    maxIndexedOrSolutionsReached: false,
+    maxIndexedAndSolutionsReached: false,
+    maxScansToExplodeReached: false,
+    prunedSimilarIndexes: false,
+    winningPlan: {
+      isCached: false,
+      stage: 'FETCH',
+      inputStage: {
+        stage: 'IXSCAN',
+        keyPattern: {
+          explicit: 1,
+          'audio_features.instrumentalness': 1,
+          'audio_features.speechiness': 1
+        },
+        indexName: 'explicit_1_audio_features.instrumentalness_1_audio_features.speechiness_1',
+        isMultiKey: false,
+        multiKeyPaths: {
+          explicit: [],
+          'audio_features.instrumentalness': [],
+          'audio_features.speechiness': []
+        },
+        isUnique: false,
+        isSparse: false,
+        isPartial: false,
+        indexVersion: 2,
+        direction: 'forward',
+        indexBounds: {
+          explicit: [ '[false, false]' ],
+          'audio_features.instrumentalness': [ '[0.5, inf.0]' ],
+          'audio_features.speechiness': [ '[-inf.0, 0.3]' ]
+        }
+      }
+    },
+    rejectedPlans: []
+  },
+  executionStats: {
+    executionSuccess: true,
+    nReturned: 18199,
+    executionTimeMillis: 38,
+    totalKeysExamined: 18342,
+    totalDocsExamined: 18199,
+    executionStages: {
+      isCached: false,
+      stage: 'FETCH',
+      nReturned: 18199,
+      executionTimeMillisEstimate: 37,
+      works: 18342,
+      advanced: 18199,
+      needTime: 142,
+      needYield: 0,
+      saveState: 2,
+      restoreState: 2,
+      isEOF: 1,
+      docsExamined: 18199,
+      alreadyHasObj: 0,
+      inputStage: {
+        stage: 'IXSCAN',
+        nReturned: 18199,
+        executionTimeMillisEstimate: 9,
+        works: 18342,
+        advanced: 18199,
+        needTime: 142,
+        needYield: 0,
+        saveState: 2,
+        restoreState: 2,
+        isEOF: 1,
+        keyPattern: {
+          explicit: 1,
+          'audio_features.instrumentalness': 1,
+          'audio_features.speechiness': 1
+        },
+        indexName: 'explicit_1_audio_features.instrumentalness_1_audio_features.speechiness_1',
+        isMultiKey: false,
+        multiKeyPaths: {
+          explicit: [],
+          'audio_features.instrumentalness': [],
+          'audio_features.speechiness': []
+        },
+        isUnique: false,
+        isSparse: false,
+        isPartial: false,
+        indexVersion: 2,
+        direction: 'forward',
+        indexBounds: {
+          explicit: [ '[false, false]' ],
+          'audio_features.instrumentalness': [ '[0.5, inf.0]' ],
+          'audio_features.speechiness': [ '[-inf.0, 0.3]' ]
+        },
+        keysExamined: 18342,
+        seeks: 143,
+        dupsTested: 0,
+        dupsDropped: 0
+      }
+    }
+  },
+  queryShapeHash: 'FE762D4F2B5D72A33111DCB89F7CB4B39B2AE21E94811AF736AAD502968408F5',
+  command: {
+    find: 'tracks',
+    filter: {
+      'audio_features.instrumentalness': { '$gte': 0.5 },
+      'audio_features.speechiness': { '$lte': 0.3 },
+      explicit: false
+    },
+    '$db': 'spotify'
+  },
+  serverInfo: {
+    host: 'ac-tisgreh-shard-00-01.l8m9ene.mongodb.net',
+    port: 27017,
+    version: '8.0.23',
+    gitVersion: 'ccf0d81588377542f00eeecf1b1ffbc095b1eeff'
+  },
+  serverParameters: {
+    internalQueryFacetBufferSizeBytes: 104857600,
+    internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+    internalLookupStageIntermediateDocumentMaxSizeBytes: 16793600,
+    internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+    internalQueryMaxBlockingSortMemoryUsageBytes: 33554432,
+    internalQueryProhibitBlockingMergeOnMongoS: 0,
+    internalQueryMaxAddToSetBytes: 104857600,
+    internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600,
+    internalQueryFrameworkControl: 'trySbeRestricted',
+    internalQueryPlannerIgnoreIndexWithCollationForRegex: 1
+  },
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1780174997, i: 18 }),
+    signature: {
+      hash: Binary.createFromBase64('m4WErMLdFTnlmNl3CKwIqdn8dFE=', 0),
+      keyId: Long('7600820902384631838')
+    }
+  },
+  operationTime: Timestamp({ t: 1780174997, i: 18 })
+}

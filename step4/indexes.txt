@@ -1,0 +1,127 @@
+Step 1 - до index
+
+Пояснення виконання запиту до оптимізації: {
+  explainVersion: '1',
+  queryPlanner: {
+    namespace: 'spotify.tracks',
+    parsedQuery: {
+      '$and': [
+        { track_genre: { '$eq': 'pop' } },
+        { 'audio_features.danceability': { '$gte': 0.7 } }
+      ]
+    },
+    indexFilterSet: false,
+    queryHash: '0E1A4507',
+    planCacheShapeHash: '0E1A4507',
+    planCacheKey: 'F6F4E2CB',
+    optimizationTimeMillis: 0,
+    maxIndexedOrSolutionsReached: false,
+    maxIndexedAndSolutionsReached: false,
+    maxScansToExplodeReached: false,
+    prunedSimilarIndexes: false,
+    winningPlan: {
+      isCached: false,
+      stage: 'SORT',
+      sortPattern: { popularity: -1 },
+      memLimit: 33554432,
+      type: 'simple',
+      inputStage: {
+        stage: 'COLLSCAN',
+        filter: {
+          '$and': [
+            { track_genre: { '$eq': 'pop' } },
+            { 'audio_features.danceability': { '$gte': 0.7 } }
+          ]
+        },
+        direction: 'forward'
+      }
+    },
+    rejectedPlans: []
+  },
+  executionStats: {
+    executionSuccess: true,
+    nReturned: 354,
+    executionTimeMillis: 74,
+    totalKeysExamined: 0,
+    totalDocsExamined: 113999,
+    executionStages: {
+      isCached: false,
+      stage: 'SORT',
+      nReturned: 354,
+      executionTimeMillisEstimate: 72,
+      works: 114355,
+      advanced: 354,
+      needTime: 114000,
+      needYield: 0,
+      saveState: 5,
+      restoreState: 5,
+      isEOF: 1,
+      sortPattern: { popularity: -1 },
+      memLimit: 33554432,
+      type: 'simple',
+      totalDataSizeSorted: 197854,
+      usedDisk: false,
+      spills: 0,
+      spilledDataStorageSize: 0,
+      inputStage: {
+        stage: 'COLLSCAN',
+        filter: {
+          '$and': [
+            { track_genre: { '$eq': 'pop' } },
+            { 'audio_features.danceability': { '$gte': 0.7 } }
+          ]
+        },
+        nReturned: 354,
+        executionTimeMillisEstimate: 69,
+        works: 114000,
+        advanced: 354,
+        needTime: 113645,
+        needYield: 0,
+        saveState: 5,
+        restoreState: 5,
+        isEOF: 1,
+        direction: 'forward',
+        docsExamined: 113999
+      }
+    }
+  },
+  queryShapeHash: '1474511FF7BCC61486F539A8D06F798B778DDC8753C3BC0E8B985289D7BF3393',
+  command: {
+    find: 'tracks',
+    filter: {
+      track_genre: 'pop',
+      'audio_features.danceability': { '$gte': 0.7 }
+    },
+    sort: { popularity: -1 },
+    '$db': 'spotify'
+  },
+  serverInfo: {
+    host: 'ac-tisgreh-shard-00-01.l8m9ene.mongodb.net',
+    port: 27017,
+    version: '8.0.23',
+    gitVersion: 'ccf0d81588377542f00eeecf1b1ffbc095b1eeff'
+  },
+  serverParameters: {
+    internalQueryFacetBufferSizeBytes: 104857600,
+    internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+    internalLookupStageIntermediateDocumentMaxSizeBytes: 16793600,
+    internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+    internalQueryMaxBlockingSortMemoryUsageBytes: 33554432,
+    internalQueryProhibitBlockingMergeOnMongoS: 0,
+    internalQueryMaxAddToSetBytes: 104857600,
+    internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600,
+    internalQueryFrameworkControl: 'trySbeRestricted',
+    internalQueryPlannerIgnoreIndexWithCollationForRegex: 1
+  },
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1780171739, i: 12 }),
+    signature: {
+      hash: Binary.createFromBase64('Lrthwbkzd0PUcEeSx1UyESC2xqk=', 0),
+      keyId: Long('7600820902384631838')
+    }
+  },
+  operationTime: Timestamp({ t: 1780171739, i: 12 })
+}
+
+
