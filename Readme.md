@@ -19,10 +19,44 @@
 
 ```bash python3 scripts/01_load_data.py```
 
-5. Приклад запуску команди mongo
+5. Запуск команд mongo
 
+```bash mongosh "mongodb+srv://USER:PASSWORD@cluster0.l8m9ene.mongodb.net/?appName=Cluster0" --file scripts/02_transform.js```
+```bash mongosh "mongodb+srv://USER:PASSWORD@cluster0.l8m9ene.mongodb.net/?appName=Cluster0" --file queries/part2_queries.js```
+```bash mongosh "mongodb+srv://USER:PASSWORD@cluster0.l8m9ene.mongodb.net/?appName=Cluster0" --file queries/part3_aggregrations.js```
 ```bash mongosh "mongodb+srv://USER:PASSWORD@cluster0.l8m9ene.mongodb.net/?appName=Cluster0" --file queries/part4_indexes.js```
 
+6. Структура документу tracks (приклад)
+
+```javascript 
+{
+  "_id": "ObjectId(...)",
+  "track_id": "5SuOikwiRyPMVoIQDJUgSV",
+  "track_name": "Comedy",
+  "album_name": "Comedy",
+  "artists": ["Gen Hoshino"],
+  "explicit": false,
+  "popularity": 73,
+  "duration_ms": 230666,
+  "track_genre": "acoustic",
+  "audio_features": {
+    "danceability": 0.676,
+    "energy": 0.461,
+    "loudness": -6.746,
+    "speechiness": 0.143,
+    "acousticness": 0.0322,
+    "instrumentalness": 0.00000101,
+    "liveness": 0.358,
+    "valence": 0.715,
+    "tempo": 87.917,
+    "key": 0,
+    "mode": 1,
+    "time_signature": 4
+  },
+  "duration_sec": 230.7,
+  "popularity_tier": "high"
+}
+```
 
 
 Відповіді на питання.
